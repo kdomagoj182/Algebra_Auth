@@ -1,7 +1,7 @@
 <?php 
 	include_once 'core/init.php';
 	
-	include_once 'includes/layouts/header-index.php';
+	Helper::getHeader('header', 'Home');
 ?>
 
 
@@ -21,6 +21,6 @@
 	
 
  <?php 
-	include_once 'includes/layouts/footer.php';
+	Helper::getFooter('footer');
 ?>
 	

@@ -63,7 +63,7 @@ class Validation
 	}
 	
 	// Get error for field
-	public function hasErrors($field)
+	public function hasError($field)
 	{
 		if(isset($this->errors[$field])){
 			return $this->errors[$field];

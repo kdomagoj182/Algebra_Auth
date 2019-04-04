@@ -1,13 +1,16 @@
 <?php
     include_once 'core/init.php';
 	
-	$user=new User();  #DB insert, što treba proslijediti, create lovi $userData array, #User class, metoda create#
+	$user=new User();	#DB insert, što treba proslijediti, create lovi $userData array, #User class, metoda create#
+	if($user->check()){
+		Redirect::to('dashboard');
+	}
 	
 	$validation=new Validation();  # objekt za validaciju, da ne izbacuje error na početnoj strani
 	
 	if(Request::exists('post')){
 		if(Token::check(Request::getPost('CSRF_token'))){
-			$validate=$validation->check(/*[
+			$validate=$validation->check([
 				'name'=>[
 					'required'=>true,
 					'min'=>2,
@@ -26,7 +29,7 @@
 				'confirmPassword'=>[
 					'match'=>'password'
 				]
-			]*/);
+			]);
 			
 			if($validate->getPassed()){
 				$salt=Hash::salt(32);
@@ -41,7 +44,7 @@
 				try{
 					
 					$user->create($userData);
-					throw new Exception('There was a problem creating an account!') #to mora biti u klasi User
+					//throw new Exception('There was a problem creating an account!') #to mora biti u klasi User
 					
 				} catch(Exception $e){
 					Session::flash('danger', $e->getMessage());
@@ -50,7 +53,7 @@
 				
 				
 				Session::flash('success', 'You are registered successfully');
-				Redirect::to('index');
+				Redirect::to('login');
 			}
 		}
 	}
